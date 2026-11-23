@@ -428,7 +428,7 @@ function drillWorkshop(solved) {
   add('XC4','junction',160,1150);add('S4','guard34',160,1265);
   add('XC5','junction',160,1380);add('S5','guard34',160,1495);
   add('XC6','junction',160,1610);add('KM1','coil',160,1725);
-  add('K53','aux53',415,1035,'KM1');add('XC7','junction',415,1150);
+  add('K53','aux53',415,1035,'KM1');add('XC7','junction',415,1150);add('K14','auxNO',550,1265,'KM2');
   add('S6','start34',415,1265);add('XC8','junction',415,1610);add('KM2','coil',415,1725);
   add('XC13','junction',565,1840);
   [['K83','aux83','KM1'],['K2','auxNO','KM2'],['F1B','fLight','F1A'],['Q1B','qLight','Q1']].forEach(([id,type,link],i)=>{
@@ -448,8 +448,8 @@ function drillWorkshop(solved) {
   chain('S1:2','S2:1');chain('S2:2','XC3:X','S3:3');chain('XC3:X','K13:13');
   chain('S3:4','XC4:X','S4:3');chain('K13:14','XC4:X');
   chain('S4:4','XC5:X','S5:3');chain('S5:4','XC6:X','KM1:A1');
-  chain('XC3:X','K53:53');chain('K53:54','XC7:X','S6:3');
-  chain('S6:4','XC8:X','KM2:A1');
+  chain('XC3:X','K53:53');chain('K53:54','XC7:X','S6:3','K14:13');
+  chain('S6:4','K14:14','XC8:X','KM2:A1');
   chain('PS:0V','XC14:X','KM1:A2','KM2:A2','XC13:X');
   [['K83','83','84'],['K2','13','14'],['F1B','97','98'],['Q1B','23','24']].forEach(([id,a,b],i)=>{
     chain('XC1:X',key(id,a));
@@ -485,10 +485,11 @@ function assessDrill(project) {
   check('S6 seul · pompe à l’arrêt',{...q,S6:true},r=>r.loads.M2==='Arrêt');
   check('Marche S3 · broche et H1',{...q,S3:true},r=>spinning(r,'M1')&&lamp(r,'H1')&&r.loads.M2==='Arrêt');
   check('Relâchement S3 · broche maintenue',q,r=>spinning(r,'M1')&&lamp(r,'H1'));
-  check('S6 activé · pompe et H2',{...q,S6:true},r=>spinning(r,'M1')&&spinning(r,'M2')&&lamp(r,'H2'));
-  check('Q2 ouvert · pompe sans puissance, bobine KM2 collée',{...q,Q2:false,S6:true},r=>spinning(r,'M1')&&r.loads.M2==='Arrêt'&&r.state.KM2);
-  check('Ouverture S4 · arrêt broche et pompe',{...q,S4:true,S6:true},r=>r.loads.M1==='Arrêt'&&r.loads.M2==='Arrêt'&&!lamp(r,'H1')&&!lamp(r,'H2'));
-  check('Nouveau départ par S3',{...q,S3:true,S6:true},r=>spinning(r,'M1')&&spinning(r,'M2'));
+  check('Appui sur S6 · démarrage de la pompe',{...q,S6:true},r=>spinning(r,'M1')&&spinning(r,'M2')&&lamp(r,'H2'));
+  check('Relâchement S6 · pompe maintenue par KM2',q,r=>spinning(r,'M1')&&spinning(r,'M2')&&lamp(r,'H2'));
+  check('Q2 ouvert · pompe sans puissance, bobine KM2 collée',{...q,Q2:false},r=>spinning(r,'M1')&&r.loads.M2==='Arrêt'&&r.state.KM2);
+  check('Ouverture S4 · arrêt broche et pompe',{...q,S4:true},r=>r.loads.M1==='Arrêt'&&r.loads.M2==='Arrêt'&&!lamp(r,'H1')&&!lamp(r,'H2'));
+  check('Nouveau départ par S3',{...q,S3:true},r=>spinning(r,'M1')&&r.loads.M2==='Arrêt');
   check('F1 déclenché · H3 allumé, moteurs à l’arrêt',{...q,F1A:true,S6:true},r=>lamp(r,'H3')&&r.loads.M1==='Arrêt'&&r.loads.M2==='Arrêt');
   check('Réarmement F1 · aucun redémarrage',q,r=>!lamp(r,'H3')&&r.loads.M1==='Arrêt'&&r.loads.M2==='Arrêt');
   check('Bornes de carcasse raccordées au PE',q,r=>r.potential['M1:PE']==='PE'&&r.potential['M2:PE']==='PE');
@@ -1743,7 +1744,7 @@ function printSymbols(svg,card) {
   }else{
     const controls={
       no:[false,'push'],nc:[true,'push'],stop12:[true,card.id==='S1'&&mode==='drill'?'emergency':'push'],
-      start34:[false,card.id==='S6'&&mode==='drill'?'selector':'push'],
+      start34:[false,'push'],
       emergency:[true,'emergency'],sensor:[false,'sensor'],guard34:[true,'limit'],
       contact2:[false,'selector'],contact3:[false,'selector'],
       fCommand:[true,'thermal'],fLight:[false,'thermal'],
