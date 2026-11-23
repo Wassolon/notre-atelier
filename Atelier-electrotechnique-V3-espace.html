@@ -1085,7 +1085,7 @@ function renderControls() {
       isolator:inputs[d.id]?'Ouvrir le sectionneur':'Fermer le sectionneur',
       ...Object.fromEntries(['breaker','breaker1','breaker2'].map(type=>[type,inputs[d.id]?'Ouvrir le disjoncteur':'Fermer le disjoncteur']))
     };
-    const momentary=['no','nc','stop12','start34'].includes(d.type)&&!(mode==='drill'&&d.id==='S6');
+    const momentary=['no','nc','stop12','start34'].includes(d.type);
     const tripped=d.type==='breaker'&&inputs[d.id]==='trip';
     button.textContent=d.id+' · '+(tripped?'Réarmer le disjoncteur moteur':captions[d.type]);
     button.setAttribute('aria-pressed',Boolean(inputs[d.id]));
