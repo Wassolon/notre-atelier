@@ -50,6 +50,9 @@ summary{cursor:pointer}ul{padding-left:20px}li{margin-bottom:5px}
 :root{--paper:#fcfdff;--line:#cbd8e5;--muted:#496275}
 header{padding:11px 18px;border-bottom:3px solid #3777a9}
 header h1{display:flex;align-items:center;gap:10px}
+header h1 a{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}
+header h1 a:hover{text-decoration:underline;text-underline-offset:4px}
+header h1 a:focus-visible{outline:3px solid #bc620c;outline-offset:4px;border-radius:3px}
 header h1 span{font-size:12px;font-weight:650;border:1px solid #7898b3;padding:3px 6px;border-radius:5px}
 header .bar{margin-left:auto}
 #pdf{background:#e4f3ff;color:#153958;border-color:#a8c7df;font-weight:650}
@@ -82,7 +85,7 @@ header .bar{margin-left:auto}
   .print-lists th,.print-lists td{border:1px solid #555;padding:1.4mm;text-align:left}
 }
 </style>
-<header><h1>Atelier électrotechnique <span>V4</span></h1><label for="preset">Montage <select id="preset"><option value="free">Câblage libre</option><option value="direct">Démarrage direct</option><option value="reverse">Inversion de sens</option><option value="drill">Perceuse · broche et pompe</option></select></label></header>
+<header><h1><a href="index.html" aria-label="Retour au menu principal">Atelier électrotechnique <span>V4</span></a></h1><label for="preset">Montage <select id="preset"><option value="free">Câblage libre</option><option value="direct">Démarrage direct</option><option value="reverse">Inversion de sens</option><option value="drill">Perceuse · broche et pompe</option></select></label></header>
 <div class="layout">
 <aside id="componentsPanel">
 <button id="toggleComponents" type="button" aria-controls="componentsTools" aria-expanded="true" title="Replier les composants"><span aria-hidden="true">‹</span><strong>Composants</strong></button><section class="panel" id="componentsTools"><input type="search" id="filter" placeholder="Rechercher…" aria-label="Rechercher un composant"><label for="contactGroup">Appareil des prochains contacts</label><select id="contactGroup" style="width:100%;margin:4px 0 10px"></select><div id="palette"></div></section>
