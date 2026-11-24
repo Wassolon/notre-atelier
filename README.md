@@ -4,9 +4,10 @@ Deux simulateurs industriels autonomes à ouvrir dans un navigateur.
 
 | Fichier | Contenu |
 | --- | --- |
-| `index.html` | Page d’accueil qui donne accès aux deux ateliers. |
-| `Atelier-electrotechnique-V2.html` | Atelier électrotechnique et son code source. |
-| `Atelier-electropneumatique.html` | Atelier électropneumatique et son code source. |
+| `index.html` | Page d’accueil des simulateurs publiés. |
+| `Atelier-electrotechnique-V4.html` | Atelier électrotechnique publié. |
+| `Atelier-electropneumatique.html` | Atelier électropneumatique publié. |
+| `_archives/` | Versions électrotechniques V2 et V3 conservées dans GitHub, exclues du site GitHub Pages. |
 
 Chaque atelier contient son interface HTML, ses styles CSS et sa logique JavaScript dans le même fichier. Dans un éditeur comme VS Code, cherche `<style>` pour les styles et `<script>` pour la logique. Ouvre `index.html` pour utiliser les ateliers en local.
 
